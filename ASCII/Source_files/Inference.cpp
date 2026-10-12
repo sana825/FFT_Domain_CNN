@@ -354,11 +354,9 @@ void spcnn_inference(fixed_t input_image[IMAGE_HEIGHT][IMAGE_WIDTH],
         buffer2[i] = zero;
     }
 
-    // Convert float input ? complex fixed-point
     complex_fixed_t fft_input[IMAGE_HEIGHT][IMAGE_WIDTH];
     complex_fixed_t fft_output[IMAGE_HEIGHT][IMAGE_WIDTH];
 
-    // CHANGED ram_2p ? ram_1p: written once then read once, strictly serial.
     #pragma HLS BIND_STORAGE variable=fft_input  type=ram_1p impl=bram
     #pragma HLS BIND_STORAGE variable=fft_output type=ram_1p impl=bram
 
@@ -374,11 +372,9 @@ void spcnn_inference(fixed_t input_image[IMAGE_HEIGHT][IMAGE_WIDTH],
 
     complex_fixed_t shifted[IMAGE_HEIGHT][IMAGE_WIDTH];
 
-    // CHANGED ram_2p ? ram_1p: fft_shift writes, copy loop reads — serial.
     #pragma HLS BIND_STORAGE variable=shifted type=ram_1p impl=bram
     fft_shift(fft_output, shifted);
 
-    // Copy shifted spectrum into channel-major buffer
     for (int i = 0; i < IMAGE_HEIGHT; i++) {
         for (int j = 0; j < IMAGE_WIDTH; j++) {
             #pragma HLS PIPELINE 
