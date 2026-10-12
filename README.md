@@ -57,5 +57,5 @@ FFT_Domain_CNN/
 
 ## Implementation and Validation
 
-The source files are intended for use within a Xilinx Vitis HLS workspace. The testbench provides the inputs required to simulate and validate the end-to-end SpCNN inference functionality for both datasets.
+The source files are intended for use within a Xilinx Vitis HLS workspace. The testbench provides the inputs required to simulate and validate the end-to-end SpCNN inference functionality for both datasets. 
 
