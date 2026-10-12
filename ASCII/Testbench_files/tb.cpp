@@ -68,6 +68,7 @@ static const FolderEntry FOLDERS[94] = {
     { "~",       93 }
 };
 
+
 bool parse_h_file(const std::string& path, fixed_t pixels[4096]) {
     std::ifstream f(path.c_str());
     if (!f.is_open()) return false;
@@ -139,7 +140,7 @@ int main(int argc, char** argv) {
     const char* root = (argc > 1) ? argv[1] : TEST_DATA_ROOT;
 
     std::cout << "============================================================\n"
-              << "  SPECTRAL CNN -- ACCURACY EVALUATION\n"
+              << "  SPECTRAL CNN -- BATCH ACCURACY EVALUATION\n"
               << "============================================================\n\n";
 
     std::cout << "Mode         : FULL TEST (all samples)\n";
@@ -160,6 +161,7 @@ int main(int argc, char** argv) {
 
     std::clock_t batch_start = std::clock();
 
+    // ---- Loop over the 94 hardcoded folders ----
     for (int fi = 0; fi < 94; fi++) {
 
         const char* folder_name = FOLDERS[fi].folder_name;
@@ -179,6 +181,7 @@ int main(int argc, char** argv) {
             continue;
         }
 
+        // ---- Loop over .h files in this folder ----
         for (size_t hi = 0; hi < files.size(); hi++) {
 
             std::string fpath = folder_path + "/" + files[hi];
@@ -220,6 +223,7 @@ int main(int argc, char** argv) {
     std::clock_t batch_end = std::clock();
     double total_ms = 1000.0 * (batch_end - batch_start) / CLOCKS_PER_SEC;
 
+    // ---- Per-class accuracy report ----
     std::cout << "\n============================================================\n"
               << "  PER-CLASS ACCURACY REPORT\n"
               << "============================================================\n";
@@ -231,6 +235,11 @@ int main(int argc, char** argv) {
               << std::setw(8)  << "Total"
               << "Accuracy\n"
               << std::string(52, '-') << "\n";
+
+    // All accuracy bookkeeping below uses plain double, computed from the
+    // int counters. fixed_t is never mixed with a float/double literal or
+    // variable in a comparison / arithmetic operator, which is what caused
+    // the ambiguous-overload errors in the original version.
     double sum_class_acc  = 0.0;
     int    classes_tested = 0;
     int    worst_class = -1, best_class = -1;
