@@ -30,25 +30,27 @@ The testbench directory contains the simulation driver and test inputs used to v
 ```text
 FFT_Domain_CNN/
 ├── ASCII/
-│   ├── source_files/
+│   ├── Source_files/
 │   │   ├── Inference.cpp
 │   │   ├── Inference.h
-│   │   └── weights.h
-│   ├── tb.cpp
-│   └── Images/
-│       ├── <class_0>/
-│       ├── <class_1>/
-│       └── ...
+│   │   └── Weights.h
+│   ├── Testbench_files/
+│   │   ├── tb.cpp
+|   └── ├── Images/
+│           ├── <class_0>/
+│           ├── <class_1>/
+│           └── ...
 └── MNIST/
     ├── source_files/
     │   ├── Inference.cpp
     │   ├── Inference.h
-    │   └── weights.h
-    ├── tb.cpp
-    └── Images/
-        ├── <class_0>/
-        ├── <class_1>/
-        └── ...
+    │   └── Weights.h
+    ├── Testbench_files/
+    │   ├── tb.cpp
+    └── ├── Images/
+            ├── <class_0>/
+            ├── <class_1>/
+            └── ...
 ```
 
 *Note: The directory structure above illustrates the logical organization; actual paths may vary slightly.*
